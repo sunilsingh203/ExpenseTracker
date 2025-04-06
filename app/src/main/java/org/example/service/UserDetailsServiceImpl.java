@@ -1,10 +1,13 @@
 package org.example.service;
 
+import org.example.ValidationUtil.ValidateUserAttributes;
 import org.example.entities.UserInfo;
 
+import org.example.model.UserInfoDto;
 import org.example.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +31,8 @@ public class UserDetailsServiceImpl implements UserDetailsService
     @Autowired
     private final UserRepository userRepository;
 
-
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
     private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
@@ -44,6 +48,28 @@ public class UserDetailsServiceImpl implements UserDetailsService
         }
         log.info("User Authenticated Successfully..!!!");
         return new CustomUserDetails(user);
+    }
+
+    public UserInfo checkIfUserAlreadyExist(UserInfoDto userInfoDto){
+        return userRepository.findByUsername(userInfoDto.getUserName());
+
+    }
+
+    public Boolean signupUser(UserInfoDto userInfoDto){
+
+        ValidateUserAttributes.validateUserAttributes(
+                userInfoDto.getUserName(),
+                userInfoDto.getEmail(),
+                userInfoDto.getPassword()
+        );
+        userInfoDto.setPassword(passwordEncoder.encode(userInfoDto.getPassword()));
+        if(Objects.nonNull(checkIfUserAlreadyExist(userInfoDto))){
+            return false;
+        }
+        String userId = UUID.randomUUID().toString();
+        userRepository.save(new UserInfo(userId, userInfoDto.getUserName(), userInfoDto.getPassword(), new HashSet<>()));
+        // pushEventToQueue
+        return true;
     }
 
 

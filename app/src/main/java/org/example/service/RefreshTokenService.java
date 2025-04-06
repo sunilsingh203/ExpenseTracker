@@ -5,6 +5,7 @@ import org.example.entities.UserInfo;
 import org.example.repository.RefreshTokenRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
