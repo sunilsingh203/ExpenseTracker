@@ -1,11 +1,9 @@
 package org.example.model;
 
-import lombok.Data;
 import org.example.entities.UserInfo;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-@Data
 @JsonNaming (PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class UserInfoDto extends UserInfo
 {

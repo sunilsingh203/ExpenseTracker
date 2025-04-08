@@ -5,7 +5,6 @@ import org.example.entities.UserInfo;
 import org.example.repository.RefreshTokenRepository;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -26,7 +25,7 @@ public class RefreshTokenService {
         RefreshToken refreshToken = RefreshToken.builder()
                 .userInfo(userInfoExtracted)
                 .token(UUID.randomUUID().toString())
-                .expiryDate(Instant.now().plusMillis(6000000))
+                .expiryDate(Instant.now().plusMillis(600000))
                 .build();
         return refreshTokenRepository.save(refreshToken);
     }

@@ -1,6 +1,5 @@
 package org.example.auth;
 
-
 import org.example.repository.UserRepository;
 import org.example.service.UserDetailsServiceImpl;
 import lombok.Data;
