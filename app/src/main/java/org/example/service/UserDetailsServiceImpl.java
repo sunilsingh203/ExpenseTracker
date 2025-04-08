@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.ValidationUtil.ValidateUserAttributes;
 import org.example.entities.UserInfo;
 import org.example.model.UserInfoDto;
 import org.example.repository.UserRepository;
@@ -54,6 +55,10 @@ public class UserDetailsServiceImpl implements UserDetailsService
 
     public Boolean signupUser(UserInfoDto userInfoDto){
         //        ValidationUtil.validateUserAttributes(userInfoDto);
+        ValidateUserAttributes.validateUserAttributes(
+                userInfoDto.getUsername(),
+                userInfoDto.getPassword()
+        );
         userInfoDto.setPassword(passwordEncoder.encode(userInfoDto.getPassword()));
         if(Objects.nonNull(checkIfUserAlreadyExist(userInfoDto))){
             return false;

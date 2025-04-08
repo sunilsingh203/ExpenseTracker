@@ -21,13 +21,9 @@ public class ValidateUserAttributes {
         return PASSWORD_REGEX.matcher(password).matches();
     }
 
-    public static void validateUserAttributes(String username, String email, String password) {
+    public static void validateUserAttributes(String username,  String password) {
         if (username == null || username.trim().isEmpty()) {
             throw new IllegalArgumentException("Username is required");
-        }
-
-        if (!isValidEmail(email)) {
-            throw new IllegalArgumentException("Invalid email format");
         }
 
         if (!isValidPassword(password)) {

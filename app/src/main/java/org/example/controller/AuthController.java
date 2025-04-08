@@ -41,7 +41,10 @@ public class AuthController
             String jwtToken = jwtService.GenerateToken(userInfoDto.getUsername());
             return new ResponseEntity<>(JwtResponseDTO.builder().accessToken(jwtToken).
                     token(refreshToken.getToken()).build(), HttpStatus.OK);
-        }catch (Exception ex){
+        }catch ( IllegalArgumentException illegalArgumentException){
+            return new ResponseEntity<>("enter a valid username and password", HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception ex){
             return new ResponseEntity<>("Exception in User Service", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
